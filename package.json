@@ -1,0 +1,22 @@
+{
+  "name": "DeployedBots",
+  "version": "1.0.0",
+  "description": "All of monacraft's discord.js bots",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monacraft/DeployedBot.git"
+  },
+  "author": "Monacraft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Monacraft/MedBot/issues"
+  },
+  "homepage": "https://github.com/Monacraft/MedBot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.0"
+  }
+}
