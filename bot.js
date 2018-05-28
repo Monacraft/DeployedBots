@@ -124,7 +124,7 @@ medBot.on('ready', () => {
     role_1 = medBot.guilds.get(guildID).roles.find('name', '1st Year').id;
     role_2 = medBot.guilds.get(guildID).roles.find('name', '2nd Year').id;
     fun_GameNights = medBot.guilds.get(guildID).roles.find('name', 'gamenights').id;
-    medBot.guilds.get(guildID).channels.get(welcomeID).send(welcome[4]);
+    //medBot.guilds.get(guildID).channels.get(welcomeID).send(welcome[4]);
 });
 
 var pongCount = 0;
