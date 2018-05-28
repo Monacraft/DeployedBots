@@ -105,7 +105,7 @@ medBot.on('ready', () => {
                 if (obj.content.substring(0, 9) === welcome[4].substring(1, 10) && obj.author.id === myID) {
                     medBot.guilds.get(guildID).channels.get(welcomeID).fetchMessage(obj.id).then(
                         msg => {
-                            msg.delete();
+                            // msg.delete();
                         }
                     ).catch(console.error)
                 }
