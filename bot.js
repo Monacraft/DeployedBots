@@ -161,6 +161,25 @@ medBot.on('message', msg => {
             process.exit();
         }
     }
+    if (msg.content.substr(0, 3).toLowerCase() === ".e ") {
+        var s1 = msg.content.split(':');
+        try {
+            var s2 = s1[2].split('>');
+
+            var emoji = client.emojis.get(s2[0]);
+            msg.channel.send({
+                files: [
+                    {
+                        attachment: emoji.url,
+                        name: emoji.name + '.png'
+                    }
+                ]
+            });
+            msg.delete();
+        } catch (err) {
+            console.log("Error: " + msg.content);
+        }
+    }
     if (msg.content === "m!test") {
         medBot.channels.get("400109523118850078").send("⭐ Hello " + msg.author + " and Welcome to the UNSW Medicine Discord!");
         msg.author.send("For the following messages, react options will appear one-by-one and possibly out of order: ").then(
