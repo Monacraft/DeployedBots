@@ -106,7 +106,7 @@ medBot.on('ready', () => {
                 if (obj.content.substring(0, 9) === welcome[4].substring(1, 10) && obj.author.id === myID) {
                     medBot.guilds.get(guildID).channels.get(welcomeID).fetchMessage(obj.id).then(
                         msg => {
-                            msg.delete();
+                            // msg.delete();
                         }
                     ).catch(console.error)
                 }
@@ -123,7 +123,7 @@ medBot.on('ready', () => {
     role_3 = medBot.guilds.get(guildID).roles.find('name', '3rd Year').id;
 
     fun_GameNights = medBot.guilds.get(guildID).roles.find('name', 'gamenights').id;
-    medBot.guilds.get(guildID).channels.get(welcomeID).send(welcome[4]);
+    //medBot.guilds.get(guildID).channels.get(welcomeID).send(welcome[4]);
 });
 
 var pongCount = 0;
@@ -152,9 +152,31 @@ medBot.on('message', msg => {
     if (msg.content === "m!dates") {
         msg.reply("Key Dates: https://cdn.discordapp.com/attachments/399907273310208001/400135192062459905/unknown.png");
     }
+    if (msg.content.toLowerCase() === "uwu") {
+     msg.channel.send(" ", { file: "https://cdn.discordapp.com/attachments/285215702774972427/485404754382553098/40591901_10155708527450869_8535339261245784064_n.jpg" });
+   }
     if (msg.author.id === myID) {
         if (shutdown) {
             process.exit();
+        }
+    }
+    if (msg.content.substr(0, 3).toLowerCase() === ".e ") {
+        var s1 = msg.content.split(':');
+        try {
+            var s2 = s1[2].split('>');
+
+            var emoji = client.emojis.get(s2[0]);
+            msg.channel.send({
+                files: [
+                    {
+                        attachment: emoji.url,
+                        name: emoji.name + '.png'
+                    }
+                ]
+            });
+            msg.delete();
+        } catch (err) {
+            console.log("Error: " + msg.content);
         }
     }
     if (msg.content === "m!test") {
