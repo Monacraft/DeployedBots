@@ -173,7 +173,7 @@ medBot.on('message', msg => {
         }
     }
     if (msg.content === "m!test") {
-        medBot.channels.get("400109523118850078").send("⭐ Hello " + msg.author + " and Welcome to the UNSW Medicine Discord!");
+        medBot.channels.get("400133865487990804").send("⭐ Hello " + msg.author + " and Welcome to the UNSW Medicine Discord!");
         msg.author.send("For the following messages, react options will appear one-by-one and possibly out of order: ").then(
             msg.author.send(welcome[0]).then(message => {
                 message.react(numbers[1]);
