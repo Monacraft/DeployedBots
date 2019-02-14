@@ -55,15 +55,8 @@ Before that, why don't you fill me in on who you are:
 
 Select one please (Step 1 of 3):
  `, `
-What College are you in?
- (If you haven't found out, react to this whenever you do)
-
-   ${reactA} - College A
-   ${reactB} - College B
-   ${reactC} - College C
-   ${reactD} - College D
-
-Select one please (Step 1.5 of 3):
+We have removed support for colleges in the discord now.
+Please contact Monacraft if you get this message
 `, `
 Ok!
 Finally, would you like to be tagged for game nights?
