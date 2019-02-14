@@ -26,16 +26,13 @@ var collegeC = '';
 var collegeD = '';
 var role_1 = '';
 var role_2 = '';
+var role_3 = '';
 var fun_GameNights = '';
 var fun_Minecraft = '';
 
 var welcomeID = '400133865487990804';
 
 var numbers = ["0⃣", "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣"];
-var reactA = '🇦';
-var reactB = '🇧';
-var reactC = '🇨';
-var reactD = '🇩';
 
 var plus = '➕';
 var hospital = '🏥';
@@ -51,7 +48,8 @@ Before that, why don't you fill me in on who you are:
 
    ${numbers[1]}  - 1st Year UNSW Med Student
    ${numbers[2]}  - 2nd Year UNSW Med Student
-   ${plus}  - Phase 2/3 UNSW Med Student
+   ${numbers[3]}  - 3rd Year UNSW Med Student
+   ${plus}  - Phase 3 UNSW Med Student
    ${hospital}  - Medicine but not at UNSW
    ${ok}  - I don't do medicine, but thanks for asking
 
@@ -94,6 +92,9 @@ Here is a permanent invite link: https://discord.gg/Uf3v2wG
 Feel free to ask any questions in #general or pm an Admin.
 `];
 
+
+medBot.on('error', console.error);
+
 medBot.on('ready', () => {
     medBot.user.setGame("Welcome to UNSW Medicine");
     console.log(`Logged in as ${medBot.user.tag}!`);
@@ -116,13 +117,11 @@ medBot.on('ready', () => {
     roleMedicine = medBot.guilds.get(guildID).roles.find('name', 'Medicine').id;
     roleMedButNotUnsw = medBot.guilds.get(guildID).roles.find('name', 'MedbutnotUNSW').id;
     roleNotMed = medBot.guilds.get(guildID).roles.find('name', 'Normies').id;
-    roleUnswElder = medBot.guilds.get(guildID).roles.find('name', 'Phase 2 & 3').id;
-    collegeA = medBot.guilds.get(guildID).roles.find('name', 'College A').id;
-    collegeB = medBot.guilds.get(guildID).roles.find('name', 'College B').id;
-    collegeC = medBot.guilds.get(guildID).roles.find('name', 'College C').id;
-    collegeD = medBot.guilds.get(guildID).roles.find('name', 'College D').id;
+    roleUnswElder = medBot.guilds.get(guildID).roles.find('name', 'Phase 3').id;
     role_1 = medBot.guilds.get(guildID).roles.find('name', '1st Year').id;
     role_2 = medBot.guilds.get(guildID).roles.find('name', '2nd Year').id;
+    role_3 = medBot.guilds.get(guildID).roles.find('name', '3rd Year').id;
+
     fun_GameNights = medBot.guilds.get(guildID).roles.find('name', 'gamenights').id;
     medBot.guilds.get(guildID).channels.get(welcomeID).send(welcome[4]);
 });
@@ -164,6 +163,7 @@ medBot.on('message', msg => {
             msg.author.send(welcome[0]).then(message => {
                 message.react(numbers[1]);
                 message.react(numbers[2]);
+                message.react(numbers[3]);
                 message.react(plus);
                 message.react(hospital);
                 message.react(ok);
@@ -192,6 +192,11 @@ medBot.on('messageReactionAdd', (react, user) => {
                 medBot.guilds.get(guildID).members.get(user.id).addRole(roleMedicine);
                 med = true;
             }
+            if (react.emoji.name === numbers[3]) {
+                medBot.guilds.get(guildID).members.get(user.id).addRole(role_3);
+                medBot.guilds.get(guildID).members.get(user.id).addRole(roleMedicine);
+                med = true;
+            }
             if (react.emoji.name === hospital) {
                 medBot.guilds.get(guildID).members.get(user.id).addRole(roleMedButNotUnsw);
                 medBot.guilds.get(guildID).members.get(user.id).addRole(roleMedicine);
@@ -216,16 +221,15 @@ medBot.on('messageReactionAdd', (react, user) => {
             }
             if (med) {
                 react.message.delete();
-                react.message.channel.send(welcome[1]).then(sentMessage => {
-                    sentMessage.react(reactA);
-                    sentMessage.react(reactB);
-                    sentMessage.react(reactC);
-                    sentMessage.react(reactD);
+                // Used to handle college roles here
+                react.message.channel.send(welcome[2]).then(sentMessage => {
+                    sentMessage.react(dice);
+                    sentMessage.react(fail);
                 });
             }
         }
         //console.log(react.message.content.substring(0, 19) + ":" + welcome[1].substring(1, 20));
-        if (react.message.content.substring(0, 19) === welcome[1].substring(1, 20)) {
+        /*if (react.message.content.substring(0, 19) === welcome[1].substring(1, 20)) {
             //console.log("Yes");
             var college = false;
             if (react.emoji.name === reactA) {
@@ -251,7 +255,7 @@ medBot.on('messageReactionAdd', (react, user) => {
                     sentMessage.react(fail);
                 });
             }
-        }
+        }*/
         if (react.message.content.substring(0, 19) === welcome[2].substring(1, 20)) {
             var done = false;
             if (react.emoji.name === dice) {
@@ -290,6 +294,7 @@ medBot.on('guildMemberAdd', member => {
             member.user.send(welcome[0]).then(message => {
                 message.react(numbers[1]);
                 message.react(numbers[2]);
+                message.react(numbers[3]);
                 message.react(plus);
                 message.react(hospital);
                 message.react(ok);
@@ -299,126 +304,7 @@ medBot.on('guildMemberAdd', member => {
 });
 
 medBot.login(process.env.MED_TOKEN);
-// Welcome to the code, remember to keep a seperate copy for public and dev build
-// For any queries, contact Monacraft
 
-const Discord1 = require("discord.js");
-const voteBot = new Discord1.Client();
-var fs = require('fs');
-
-// Build in ID's
-var v_myID = '400605141092270082';
-var devID = '130568487679688704';
-var v_shutdown = false;
-var accept = '✅';
-var fail = '❌';
-
-var numbers = ["0⃣", "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣"];
-var reactA = '🇦';
-var reactB = '🇧';
-var reactC = '🇨';
-var reactD = '🇩';
-
-var plus = '➕';
-var hospital = '🏥';
-var ok = '👌';
-var dice = '🎲';
-
-
-voteBot.on('ready', () => {
-    voteBot.user.setGame("v!help for cmds");
-    console.log(`Logged in as ${voteBot.user.tag}!`);
-
-});
-
-voteBot.on('message', msg => {
-    if (msg.author.id === devID) {
-        // This ID is set to Monacraft's ID
-        // Dev Commands
-        if (msg.content === 'v!shutdown') {
-            if (msg.author.id === devID) {
-                v_shutdown = true;
-                msg.reply("Goodbye :')");
-            }
-        }
-    }
-    if (msg.content.substring(0, 7) === "v!avatar") {
-        if (msg.content.substring(7, msg.content.length) === '') {
-            if (msg.author.avatarURL === null || msg.author.avatarURL === undefined) {
-                msg.reply("You do not have an avatar!");
-            }
-            else {
-                msg.reply(msg.author.avatarURL);
-            }
-        }
-        else {
-            var membr = msg.guild.members.find('displayName', msg.content.substring(8, msg.content.length));
-            if (membr === null || membr === undefined) {
-                msg.reply("They do not have an avatar! (or they may not exist)");
-            }
-            else {
-                msg.reply(membr.user.avatarURL);
-            }
-        }
-    }
-    if (msg.content === "v!help") {
-        msg.author.send(`__**Commands:**__
-\`\`\`
-v!help
-v!avatar [?user]               (user specifies whose avater)
-v!start [topic]                (to start)
-v!add [option]                 (add option)
-
-When adding options or creating vote description, prevent using \` and ;
-Bot by Monacraft. Avatar command by Preetham <3.
-\`\`\``);
-    }
-    if (msg.author.id === v_myID) {
-        if (v_shutdown) {
-            process.exit();
-        }
-    }
-    var notP = true;
-    if (msg.content.substring(0, 7) === "v!start" && notP) {
-        msg.delete();
-        msg.channel.send(`__**Vote by:**__   ${msg.author}
-__**Topic:**__       ${msg.content.substring(8, msg.content.length)}
-=========================================================================
-`);
-    }
-    if (msg.content.substring(0, 5) === "v!add") {
-        msg.delete();
-        var v = msg.content.substring(6, msg.content.length);
-        msg.channel.fetchMessages({ limit: 100 }).then(messages => {
-            if (messages.find("author", voteBot.user).content.substring(0, 8) === "__**Vote") {
-                var count = messages.find("author", voteBot.user).content.split(';');
-                if (count.length - 1 === 0) {
-                    messages.find("author", voteBot.user).edit(
-                        messages.find("author", voteBot.user).content +
-                        '\n   ' + numbers[count.length - 1] + " - `" + v + "`  (by " + msg.author+ ');'
-                    );
-                } else {
-                    messages.find("author", voteBot.user).edit(
-                        messages.find("author", voteBot.user).content +
-                        '\n   ' + numbers[count.length - 1] + " - `" + v + "`  (by " + msg.author + ');'
-                    );
-                }
-                messages.find("author", voteBot.user).react(numbers[count.length - 1]);
-            }
-        });
-    }
-    if (msg.channel.type === "dm") {
-        if (msg.author.id !== v_myID) {
-        }
-    }
-});
-
-voteBot.on('messageReactionAdd', (react, user) => {
-    if (user.id !== v_myID) {
-    }
-});
-
-voteBot.login(process.env.VOTE_TOKEN);
 // Welcome to the code, remember to keep a seperate copy for public and dev build
 // Yours Truly, Monacraft
 
@@ -474,6 +360,9 @@ IF YOU <UNDERSTAND> and <ACCEPT> THIS, please type /* "${acceptText}" * (without
 IF you do not receive the confirmation response, you will be autokicked in /* 24 hours. *
 \`\`\`
 `
+
+
+mkaBot.on('error', console.error);
 
 mkaBot.on('ready', () => {
     mkaBot.user.setActivity("Welcome to the MKA");
@@ -546,8 +435,13 @@ mkaBot.on('message', msg => {
  - Number Accepted:     ${acceptedCount}
  - Number Length:       ${leftCount}
  - Number Pending:      [Autokicking is disabled]
-\`\`\``)
+\`\`\``);
         msg.delete();
+    }
+    if(msg.content.substr(0, 5) === '!warn') {
+        if(msg.channel.id === '351663304978071552') {
+            var target = msg.content.substr(6);
+        }
     }
     if (msg.author.id === devID) {
         // This ID is set to Monacraft's ID
